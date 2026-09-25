@@ -1,0 +1,4 @@
+# Nmap 7.95 scan initiated Wed Sep 23 11:31:23 2026 as: /usr/lib/nmap/nmap -sS -sV -O -p- -T3 --max-retries 2 -oA nmap_other20_antes 192.117.30.20
+Host: 192.117.30.20 (192.117.30.20.static.012.net.il)	Status: Up
+Host: 192.117.30.20 (192.117.30.20.static.012.net.il)	Ports: 22/open/tcp//ssh//OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)/, 25/open/tcp//smtp//Postfix smtpd/, 80/open/tcp//http//nginx 1.18.0 (Ubuntu)/, 8080/open/tcp//http//nginx 1.18.0 (Ubuntu)/	Ignored State: closed (65531)	OS: Linux 4.19 - 5.15	Seq Index: 263	IP ID Seq: All zeros
+# Nmap done at Wed Sep 23 11:31:39 2026 -- 1 IP address (1 host up) scanned in 16.57 seconds

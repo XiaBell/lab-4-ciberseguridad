@@ -1,0 +1,1445 @@
+Script started on 2026-09-23 16:36:58+00:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="119" LINES="31"]
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# awk -F: '($2==""){print "SIN PASSWORD: "$1}' /etc/shadow
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kchage -l insecureuser
+Last password change					: Jul 29, 2026
+Password expires					: never
+Password inactive					: never
+Account expires						: never
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 99999
+Number of days of warning before password expires	: 7
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# grep -E '^PASS_(MAX|MIN|WARN)_' /etc/login.defs
+[01;31m[KPASS_MAX_[m[KDAYS	99999
+[01;31m[KPASS_MIN_[m[KDAYS	0
+[01;31m[KPASS_WARN_[m[KAGE	7
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep -E 'pam_pwquality|pam_cracklib' /etc/pam.d/common-password
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep -v '^#' /etc/sudoers | grep -v '^$'
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+root	ALL=(ALL:ALL) ALL
+%admin ALL=(ALL) ALL
+%sudo	ALL=(ALL:ALL) ALL
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Klastb -n 10 2>/dev/null
+insecure ssh:notty    192.117.99.128   Wed Sep 23 16:33 - 16:33  (00:00)
+superadm ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+superadm ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+root     ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+admin    ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+admin    ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+linuxadm ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+linuxadm ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+root     ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+user     ssh:notty    192.117.99.128   Fri Aug 21 00:37 - 00:37  (00:00)
+
+btmp begins Thu Aug 20 23:56:31 2026
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ss -tulnp
+Netid       State         Recv-Q        Send-Q               Local Address:Port                Peer Address:Port       Process                                                                                                                
+udp         UNCONN        0             0                       127.0.0.11:45939                    0.0.0.0:*                                                                                                                                 
+udp         UNCONN        0             0                    127.0.0.53%lo:53                       0.0.0.0:*           users:(("systemd-resolve",pid=51,fd=12))                                                                              
+tcp         LISTEN        0             4096                    127.0.0.11:40955                    0.0.0.0:*                                                                                                                                 
+tcp         LISTEN        0             511                        0.0.0.0:8080                     0.0.0.0:*           users:(("nginx",pid=125,fd=7),("nginx",pid=124,fd=7),("nginx",pid=123,fd=7),("nginx",pid=122,fd=7),("nginx",pid=121,fd=7))
+tcp         LISTEN        0             100                        0.0.0.0:25                       0.0.0.0:*           users:(("master",pid=684,fd=13))                                                                                      
+tcp         LISTEN        0             128                        0.0.0.0:22                       0.0.0.0:*           users:(("sshd",pid=76,fd=3))                                                                                          
+tcp         LISTEN        0             511                        0.0.0.0:80                       0.0.0.0:*           users:(("nginx",pid=125,fd=6),("nginx",pid=124,fd=6),("nginx",pid=123,fd=6),("nginx",pid=122,fd=6),("nginx",pid=121,fd=6))
+tcp         LISTEN        0             4096                 127.0.0.53%lo:53                       0.0.0.0:*           users:(("systemd-resolve",pid=51,fd=13))                                                                              
+tcp         LISTEN        0             100                           [::]:25                          [::]:*           users:(("master",pid=684,fd=14))                                                                                      
+tcp         LISTEN        0             128                           [::]:22                          [::]:*           users:(("sshd",pid=76,fd=4))                                                                                          
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# lsof -i -P -n | grep LISTEN
+bash: lsof: command not found
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Knetstat -tulnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.11:40955        0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      121/nginx: master p 
+tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      684/master          
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      76/sshd: /usr/sbin/ 
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      121/nginx: master p 
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      51/systemd-resolved 
+tcp6       0      0 :::25                   :::*                    LISTEN      684/master          
+tcp6       0      0 :::22                   :::*                    LISTEN      76/sshd: /usr/sbin/ 
+udp        0      0 127.0.0.11:45939        0.0.0.0:*                           -                   
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           51/systemd-resolved 
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ps aux --sort=-%mem | head -20
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          79  0.0  0.1 105156 21036 ?        Ssl  Jul29   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root          27  0.0  0.1  52152 15908 ?        S<s  Jul29   0:01 /lib/systemd/systemd-journald
+systemd+      51  0.0  0.0  25360 13884 ?        Ss   Jul29   0:03 /lib/systemd/systemd-resolved
+root           1  0.0  0.0 101700 10700 ?        Ss   Jul29   0:11 /usr/sbin/init
+insecur+   27430  0.0  0.0  18824  9372 ?        Ss   16:33   0:00 /lib/systemd/systemd --user
+postfix    11211  0.0  0.0  41908  8956 ?        S    Aug20   0:00 tlsmgr -l -t unix -u -c
+root       27427  0.0  0.0  13164  8800 ?        Ss   16:33   0:00 sshd: insecureuser [priv]
+root          67  0.0  0.0  17368  7784 ?        Ss   Jul29   0:04 /lib/systemd/systemd-logind
+systemd+      52  0.0  0.0  90896  7672 ?        Ssl  Jul29   0:05 /lib/systemd/systemd-timesyncd
+root          76  0.0  0.0  12196  7512 ?        Ss   Jul29   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root         994  0.0  0.0 232736  7368 ?        Ssl  Jul29   0:00 /usr/lib/policykit-1/polkitd --no-debug
+postfix      686  0.0  0.0  38156  6160 ?        S    Jul29   0:03 qmgr -l -t unix -u
+postfix    27489  0.0  0.0  38104  5912 ?        S    16:38   0:00 pickup -l -t unix -u -c
+insecur+   27446  0.0  0.0  13164  5512 ?        S    16:33   0:00 sshd: insecureuser@pts/0
+root         684  0.0  0.0  38076  4872 ?        Ss   Jul29   0:15 /usr/lib/postfix/sbin/master -w
+www-data     123  0.0  0.0  51812  4580 ?        S    Jul29   0:13 nginx: worker process
+insecur+   27431  0.0  0.0 102652  4312 ?        S    16:33   0:00 (sd-pam)
+message+      59  0.0  0.0   7268  4532 ?        Ss   Jul29   0:01 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+root       27470  0.0  0.0   6872  4044 pts/1    S    16:36   0:00 su -
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kservice --status-all 2>/dev/null
+ [ + ]  apparmor
+ [ - ]  auditd
+ [ + ]  dbus
+ [ - ]  hwclock.sh
+ [ + ]  nginx
+ [ + ]  postfix
+ [ + ]  procps
+ [ + ]  ssh
+ [ + ]  unattended-upgrades
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Ksystemctl list-units --type=service --state=running 2>/dev/null
+  UNIT                        LOAD   ACTIVE SUB     DESCRIPTION                                             
+  dbus.service                loaded active running D-Bus System Message Bus                                
+  nginx.service               loaded active running A high performance web server and a reverse proxy server
+  polkit.service              loaded active running Authorization Manager                                   
+  postfix@-.service           loaded active running Postfix Mail Transport Agent (instance -)               
+  ssh.service                 loaded active running OpenBSD Secure Shell server                             
+  systemd-journald.service    loaded active running Journal Service                                         
+  systemd-logind.service      loaded active running Login Service                                           
+  systemd-resolved.service    loaded active running Network Name Resolution                                 
+  systemd-timesyncd.service   loaded active running Network Time Synchronization                            
+  unattended-upgrades.service loaded active running Unattended Upgrades Shutdown                            
+  user@1000.service           loaded active running User Manager for UID 1000                               
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+11 loaded units listed.
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kcrontab -l
+bash: crontab: command not found
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ls -la /etc/cron*
+/etc/cron.d:
+total 16
+drwxr-xr-x 2 root root 4096 Apr  4  2025 [0m[01;34m.[0m
+drwxr-xr-x 1 root root 4096 Jul 30 06:53 [01;34m..[0m
+-rw-r--r-- 1 root root  201 Feb 14  2020 e2scrub_all
+
+/etc/cron.daily:
+total 56
+drwxr-xr-x 1 root root  4096 Jul 29 06:23 [01;34m.[0m
+drwxr-xr-x 1 root root  4096 Jul 30 06:53 [01;34m..[0m
+-rwxr-xr-x 1 root root 31821 Feb 28  2019 [01;32maide[0m
+-rwxr-xr-x 1 root root  1478 Apr  9  2020 [01;32mapt-compat[0m
+-rwxr-xr-x 1 root root    77 Feb 16  2019 [01;32mapt-show-versions[0m
+-rwxr-xr-x 1 root root  1187 Sep  5  2019 [01;32mdpkg[0m
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ls -la /var/spool/cron/crontabs 2>/dev/null
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Ksshd -T | grep -Ei 'permitrootlogin|passwordauthentication|permitemptypasswords|x11forwarding|maxauuthtries|logingracetime|allowusers|allowgroups|clientaliveinterval|clientalivecountmax|^port|pubkeyauthentication|allowttcpforwarding'
+[01;31m[Kport[m[K 22
+[01;31m[Klogingracetime[m[K 120
+[01;31m[Kmaxauthtries[m[K 6
+[01;31m[Kclientaliveinterval[m[K 0
+[01;31m[Kclientalivecountmax[m[K 3
+[01;31m[Kpermitrootlogin[m[K yes
+[01;31m[Kpubkeyauthentication[m[K yes
+[01;31m[Kpasswordauthentication[m[K yes
+[01;31m[Kx11forwarding[m[K yes
+[01;31m[Kpermitemptypasswords[m[K no
+[01;31m[Kallowtcpforwarding[m[K yes
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep -v '^#' /etc/ssh/sshd_config | grep -v '^$'
+Include /etc/ssh/sshd_config.d/*.conf
+PermitRootLogin yes
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem	sftp	/usr/lib/openssh/sftp-server
+PermitEmptyPasswords no
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kls /etc/ssh/sshd_config.d/ 2>/dev/null
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev -name authorized_keys 2>/dev/null -exec ls -l {} \;
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kls -l /etc/passwd /etc/shadow /etc/group /etc/sudoers
+-rw-r--r-- 1 root root    706 Jul 29 06:24 /etc/group
+-rw-r--r-- 1 root root   1457 Jul 29 06:24 /etc/passwd
+-rw-r----- 1 root shadow  976 Jul 29 06:24 /etc/shadow
+-r--r----- 1 root root    755 Apr  4  2023 /etc/sudoers
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev -perm -4000 -type f 2>/dev/null
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/mount
+/usr/bin/su
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/umount
+/usr/bin/sudo
+/usr/bin/pkexec
+/usr/lib/openssh/ssh-keysign
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev -perm -2000 -type f 2>/dev/null
+/usr/sbin/pam_extrausers_chkpwd
+/usr/sbin/unix_chkpwd
+/usr/sbin/postqueue
+/usr/sbin/postdrop
+/usr/bin/expiry
+/usr/bin/chage
+/usr/bin/dotlockfile
+/usr/bin/ssh-agent
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev -type f -perm -0002 2>/dev/null | head -50
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev -type d -perm -0002 ! -perm -1000 2>/dev/null
+/home/insecureuser
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind / -xdev \( -nouser -o -nogroup \) 2>/dev/null | head -30
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kfind /etc -type f -mtime -7 2>/dev/null
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kls -la /home/* /root
+/home/insecureuser:
+total 32
+drwxrwxrwx 1 insecureuser insecureuser 4096 Sep 23 16:35 [0m[34;42m.[0m
+drwxr-xr-x 1 root         root         4096 Jul 29 06:23 [01;34m..[0m
+-rw-r--r-- 1 insecureuser insecureuser  220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 insecureuser insecureuser 3771 Feb 25  2020 .bashrc
+drwx------ 2 insecureuser insecureuser 4096 Sep 23 16:33 [01;34m.cache[0m
+-rw-r--r-- 1 insecureuser insecureuser  807 Feb 25  2020 .profile
+-rw-r--r-- 1 insecureuser insecureuser    0 Sep 23 16:35 .sudo_as_admin_successful
+drwxrwxr-x 2 insecureuser insecureuser 4096 Sep 23 16:34 [01;34mevidencias[0m
+
+/root:
+total 20
+drwx------ 1 root root 4096 Sep 23 16:36 [01;34m.[0m
+drwxr-xr-x 1 root root 4096 Jul 29 06:24 [01;34m..[0m
+-rw-r--r-- 1 root root 3106 Dec  5  2019 .bashrc
+-rw-r--r-- 1 root root  161 Dec  5  2019 .profile
+drwxr-xr-x 2 root root 4096 Sep 23 16:36 [01;34mevidencias[0m
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# apt update
+[33m0% [Working][0m            Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+[33m0% [Waiting for headers] [1 InRelease 8380 B/128 kB 7%][0m                                                       Hit:2 http://archive.ubuntu.com/ubuntu focal InRelease
+[33m                                                       0% [1 InRelease 14.2 kB/128 kB 11%][0m[33m0% [Waiting for headers] [1 InRelease 14.2 kB/128 kB 11%][0m                                                         Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+[33m0% [3 InRelease 5484 B/128 kB 4%] [1 InRelease 31.5 kB/128 kB 25%][0m[33m                                                                  0% [3 InRelease 56.2 kB/128 kB 44%][0m[33m0% [3 InRelease 86.6 kB/128 kB 68%][0m[33m                                   0% [Working][0m[33m0% [Waiting for headers][0m                        Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [128 kB]
+[33m0% [4 InRelease 4036 B/128 kB 3%][0m[33m                                 0% [Working][0m[33m100% [Working][0m              Fetched 383 kB in 2s (223 kB/s)
+Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 3%Reading package lists... 3%Reading package lists... 3%Reading package lists... 3%Reading package lists... 35%Reading package lists... 35%Reading package lists... 35%Reading package lists... 35%Reading package lists... 49%Reading package lists... 49%Reading package lists... 54%Reading package lists... 64%Reading package lists... 64%Reading package lists... 68%Reading package lists... 68%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 81%Reading package lists... 81%Reading package lists... 95%Reading package lists... 95%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Reading state information... 0%Reading state information... 0%Reading state information... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# apt list --upgradable 2>/dev/null
+Listing... 0%Listing... 0%Listing... 0%Listing... Done
+[32mapt[0m/focal-updates 2.0.11 amd64 [upgradable from: 2.0.10]
+[32mlibapt-pkg6.0[0m/focal-updates 2.0.11 amd64 [upgradable from: 2.0.10]
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kapt-show-versions -u
+apt:amd64/focal-updates 2.0.10 upgradeable to 2.0.11
+libapt-pkg6.0:amd64/focal-updates 2.0.10 upgradeable to 2.0.11
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# apt-show-versions | wc -l
+252
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# cat /etc/apt/apt.conf.d/20auto-upgrades 2>/dev/null
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep -v '^//' /etc/apt/apt.conf.d/50unattended-upgrades | grep -v '^$'
+Unattended-Upgrade::Allowed-Origins {
+	"${distro_id}:${distro_codename}";
+	"${distro_id}:${distro_codename}-security";
+	// Extended Security Maintenance; doesn't necessarily exist for
+	// every release and this system may not have it installed, but if
+	// available, the policy for updates is such that unattended-upgrades
+	// should also install from here by default.
+	"${distro_id}ESMApps:${distro_codename}-apps-security";
+	"${distro_id}ESM:${distro_codename}-infra-security";
+};
+Unattended-Upgrade::Package-Blacklist {
+    // The following matches all packages starting with linux-
+    // Use $ to explicitely define the end of a package name. Without
+    // the $, "libc6" would match all of them.
+    // Special characters need escaping
+    // The following matches packages like xen-system-amd64, xen-utils-4.1,
+    // xenstore-utils and libxenstore3.0
+    // For more information about Python regular expressions, see
+    // https://docs.python.org/3/howto/regex.html
+};
+Unattended-Upgrade::DevRelease "auto";
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kunattended-upgrade --dry-run -d 2>&1 | tail -30
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-backports_universe_binary-amd64_Packages'  a=focal-backports,c=universe,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=109583 ID:9> with -32768 pin
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-backports_main_binary-amd64_Packages'  a=focal-backports,c=main,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=261984 ID:8> with -32768 pin
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_multiverse_binary-amd64_Packages'  a=focal-updates,c=multiverse,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=178199 ID:7> with -32768 pin
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_universe_binary-amd64_Packages'  a=focal-updates,c=universe,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=7142738 ID:6> with -32768 pin
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_restricted_binary-amd64_Packages'  a=focal-updates,c=restricted,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=23663311 ID:5> with -32768 pin
+Marking not allowed <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_main_binary-amd64_Packages'  a=focal-updates,c=main,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=22166515 ID:4> with -32768 pin
+Applying pinning: PkgFilePin(id=9, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-backports_universe_binary-amd64_Packages'  a=focal-backports,c=universe,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=109583 ID:9>
+Applying pinning: PkgFilePin(id=8, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-backports_main_binary-amd64_Packages'  a=focal-backports,c=main,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=261984 ID:8>
+Applying pinning: PkgFilePin(id=7, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_multiverse_binary-amd64_Packages'  a=focal-updates,c=multiverse,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=178199 ID:7>
+Applying pinning: PkgFilePin(id=6, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_universe_binary-amd64_Packages'  a=focal-updates,c=universe,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=7142738 ID:6>
+Applying pinning: PkgFilePin(id=5, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_restricted_binary-amd64_Packages'  a=focal-updates,c=restricted,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=23663311 ID:5>
+Applying pinning: PkgFilePin(id=4, priority=-32768)
+Applying pin -32768 to package_file: <apt_pkg.PackageFile object: filename:'/var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_focal-updates_main_binary-amd64_Packages'  a=focal-updates,c=main,v=20.04,o=Ubuntu,l=Ubuntu arch='amd64' site='archive.ubuntu.com' IndexType='Debian Package Index' Size=22166515 ID:4>
+Using (^linux-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^kfreebsd-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^gnumach-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^.*-modules-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^.*-kernel-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^linux-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^kfreebsd-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^gnumach-.*-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^.*-modules-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$|^.*-kernel-[1-9][0-9]*\.[0-9]+\.[0-9]+-[0-9]+(-.+)?$) regexp to find kernel packages
+Using (^linux-.*-6\.14\.0\-37\-generic$|^linux-.*-6\.14\.0\-37$|^kfreebsd-.*-6\.14\.0\-37\-generic$|^kfreebsd-.*-6\.14\.0\-37$|^gnumach-.*-6\.14\.0\-37\-generic$|^gnumach-.*-6\.14\.0\-37$|^.*-modules-6\.14\.0\-37\-generic$|^.*-modules-6\.14\.0\-37$|^.*-kernel-6\.14\.0\-37\-generic$|^.*-kernel-6\.14\.0\-37$|^linux-.*-6\.14\.0\-37\-generic$|^linux-.*-6\.14\.0\-37$|^kfreebsd-.*-6\.14\.0\-37\-generic$|^kfreebsd-.*-6\.14\.0\-37$|^gnumach-.*-6\.14\.0\-37\-generic$|^gnumach-.*-6\.14\.0\-37$|^.*-modules-6\.14\.0\-37\-generic$|^.*-modules-6\.14\.0\-37$|^.*-kernel-6\.14\.0\-37\-generic$|^.*-kernel-6\.14\.0\-37$) regexp to find running kernel packages
+Checking: apt ([<Origin component:'main' archive:'focal-updates' origin:'Ubuntu' label:'Ubuntu' site:'archive.ubuntu.com' isTrusted:True>])
+adjusting candidate version: apt=2.0.10
+Checking: libapt-pkg6.0 ([<Origin component:'main' archive:'focal-updates' origin:'Ubuntu' label:'Ubuntu' site:'archive.ubuntu.com' isTrusted:True>])
+adjusting candidate version: libapt-pkg6.0=2.0.10
+pkgs that look like they should be upgraded: 
+Fetched 0 B in 0s (0 B/s)                                                       
+fetch.run() result: 0
+Packages blacklist due to conffile prompts: []
+No packages found that can be upgraded unattended and no pending auto-removals
+The list of kept packages can't be calculated in dry-run mode.
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kaide --version
+Aide 0.16.1
+
+Compiled with the following options:
+
+WITH_MMAP
+WITH_PCRE
+WITH_POSIX_ACL
+WITH_SELINUX
+WITH_XATTR
+WITH_E2FSATTRS
+WITH_LSTAT64
+WITH_READDIR64
+WITH_ZLIB
+WITH_MHASH
+WITH_AUDIT
+CONFIG_FILE = "/dev/null"
+
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# aideinit -y -f
+Running aide --init...
+
+Start timestamp: 2026-09-23 16:49:11 +0000 (AIDE 0.16.1)
+AIDE initialized database at /var/lib/aide/aide.db.new
+Verbose level: 6
+
+Number of entries:	14703
+
+---------------------------------------------------
+The attributes of the (uncompressed) database(s):
+---------------------------------------------------
+
+/var/lib/aide/aide.db.new
+  RMD160   : X0Cs4NbRxPo/8kWku2eZ0dVmJxo=
+  TIGER    : rSzBLymsUAHozM6eUEFx6op0EqTm6lRX
+  SHA256   : 4suJm8/WNB0dYYeDvlojP4pbE1kkYE/M
+             6bTcVBVu5bo=
+  SHA512   : aStIvIAYwoRq9HLDeehIXigeU598cMn3
+             rSZGKMCZ+tp5WMd8v0c5iPSh3MKWVGdW
+             QifZLwNRj/MAVslTk+wWlQ==
+  CRC32    : CwF8cg==
+  HAVAL    : dEI8Sk/Z6OKplfj0/Iqa4knE5lnf6JpZ
+             cNUEE+hhBdo=
+  GOST     : wxARDZRnFDxnmTWq5XSQsLhgVg9JiXz6
+             IuKOutdt8vA=
+
+
+End timestamp: 2026-09-23 16:49:38 +0000 (run time: 0m 27s)
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# # Si aideinit no existe:
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# # aide --config /etc/aide/aide.conf --init
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kls -la /var/lib/aide/
+total 5120
+drwxr-xr-x 1 root root    4096 Sep 23 16:49 [0m[01;34m.[0m
+drwxr-xr-x 1 root root    4096 Jul 29 06:22 [01;34m..[0m
+-rw-r--r-- 1 root root   57064 Sep 23 16:49 aide.conf.autogenerated
+-rw------- 1 root root 2584000 Sep 23 16:49 aide.db
+-rw------- 1 root root 2584000 Sep 23 16:49 aide.db.new
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# cp /var/lib/aide/aide.db.new /var/lib/aide/aide.db
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kecho "prueba" > /root/archivo_prueba_aide.txt
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kaide --check --config /etc/aide/aide.conf
+WARNING: Old db contains a entry that shouldn't be there, run --init or --update
+
+Start timestamp: 2026-09-23 16:50:29 +0000 (AIDE 0.16.1)
+AIDE found NO differences between database and filesystem. Looks okay!!
+Verbose level: 6
+
+Number of entries:	0
+
+---------------------------------------------------
+The attributes of the (uncompressed) database(s):
+---------------------------------------------------
+
+/var/lib/aide/aide.db
+  RMD160   : X0Cs4NbRxPo/8kWku2eZ0dVmJxo=
+  TIGER    : rSzBLymsUAHozM6eUEFx6op0EqTm6lRX
+  SHA256   : 4suJm8/WNB0dYYeDvlojP4pbE1kkYE/M
+             6bTcVBVu5bo=
+  SHA512   : aStIvIAYwoRq9HLDeehIXigeU598cMn3
+             rSZGKMCZ+tp5WMd8v0c5iPSh3MKWVGdW
+             QifZLwNRj/MAVslTk+wWlQ==
+  CRC32    : CwF8cg==
+  HAVAL    : dEI8Sk/Z6OKplfj0/Iqa4knE5lnf6JpZ
+             cNUEE+hhBdo=
+  GOST     : wxARDZRnFDxnmTWq5XSQsLhgVg9JiXz6
+             IuKOutdt8vA=
+
+
+End timestamp: 2026-09-23 16:50:30 +0000 (run time: 0m 1s)
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Krm /root/archivo_prueba_aide.txt
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kaa-enabled
+Yes
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# aa-status
+apparmor module is loaded.
+170 profiles are loaded.
+89 profiles are in enforce mode.
+   /usr/bin/man
+   /usr/lib/snapd/snap-confine
+   /usr/lib/snapd/snap-confine//mount-namespace-capture-helper
+   alsamixer
+   babeld
+   bfdd
+   bgpd
+   bwrap
+   dnstracer
+   docker-default
+   eigrpd
+   fabricd
+   fusermount3
+   iotop-c
+   irssi
+   isisd
+   ldpd
+   linux-boot-prober
+   lsb_release
+   lsblk
+   lsusb
+   man_filter
+   man_groff
+   mbsync
+   mosquitto
+   nc.openbsd
+   nhrpd
+   nvidia_modprobe
+   nvidia_modprobe//kmod
+   openvpn
+   openvpn//ip
+   openvpn//update-resolv
+   os-prober
+   ospf6d
+   ospfd
+   pathd
+   pbrd
+   pim6d
+   pimd
+   plasmashell
+   plasmashell//QtWebEngineProcess
+   ripd
+   ripngd
+   rsyslogd
+   rygel
+   rygel//mx-extract
+   sbuild
+   sbuild-abort
+   sbuild-adduser
+   sbuild-apt
+   sbuild-checkpackages
+   sbuild-clean
+   sbuild-createchroot
+   sbuild-destroychroot
+   sbuild-distupgrade
+   sbuild-hold
+   sbuild-shell
+   sbuild-unhold
+   sbuild-update
+   sbuild-upgrade
+   staticd
+   tcpdump
+   tinyproxy
+   tnftp
+   tnftp//cmds
+   tnftp//dash
+   tnftp//dash//more
+   tshark
+   tshark//dumpcap
+   ubuntu_pro_apt_news
+   ubuntu_pro_esm_cache
+   ubuntu_pro_esm_cache//apt_methods
+   ubuntu_pro_esm_cache//apt_methods_gpgv
+   ubuntu_pro_esm_cache//cloud_id
+   ubuntu_pro_esm_cache//dpkg
+   ubuntu_pro_esm_cache//ps
+   ubuntu_pro_esm_cache//ubuntu_distro_info
+   ubuntu_pro_esm_cache_systemctl
+   ubuntu_pro_esm_cache_systemd_detect_virt
+   unix-chkpwd
+   unpriv_bwrap
+   unprivileged_userns
+   vrrpd
+   wg
+   wg-quick
+   wg-quick//ip
+   wg-quick//nft
+   wg-quick//sysctl
+   znc
+5 profiles are in complain mode.
+   Xorg
+   transmission-cli
+   transmission-daemon
+   transmission-gtk
+   transmission-qt
+0 processes have profiles defined.
+0 processes are in enforce mode.
+0 processes are in complain mode.
+0 processes are unconfined but have a profile defined.
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ls /etc/apparmor.d/
+[0m[01;34mabi[0m  [01;34mabstractions[0m  [01;34mdisable[0m  [01;34mforce-complain[0m  [01;34mlocal[0m  lsb_release  nvidia_modprobe  [01;34mtunables[0m
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# 
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# ls /etc/apparmor.d/
+[0m[01;34mabi[0m  [01;34mabstractions[0m  [01;34mdisable[0m  [01;34mforce-complain[0m  [01;34mlocal[0m  lsb_release  nvidia_modprobe  [01;34mtunables[0m
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# 
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# 
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# lynis --version
+2.6.2
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# lynis audit system --quick --no-colors 2>&1 | tee /root/evidencias/lynis_antes.txt
+
+[ Lynis 2.6.2 ]
+
+################################################################################
+  Lynis comes with ABSOLUTELY NO WARRANTY. This is free software, and you are
+  welcome to redistribute it under the terms of the GNU General Public License.
+  See the LICENSE file for details about using this software.
+
+  2007-2018, CISOfy - https://cisofy.com/lynis/
+  Enterprise support available (compliance, plugins, interface and tools)
+################################################################################
+
+
+[+] Initializing program
+------------------------------------
+[2C- Detecting OS... [41C [ DONE ]
+[2C- Checking profiles...[37C [ DONE ]
+
+  ---------------------------------------------------
+  Program version:           2.6.2
+  Operating system:          Linux
+  Operating system name:     Ubuntu Linux
+  Operating system version:  20.04
+  Kernel version:            6.14.0
+  Hardware platform:         x86_64
+  Hostname:                  c1246db0b82f
+  ---------------------------------------------------
+  Profiles:                  /etc/lynis/default.prf
+  Log file:                  /var/log/lynis.log
+  Report file:               /var/log/lynis-report.dat
+  Report version:            1.0
+  Plugin directory:          /etc/lynis/plugins
+  ---------------------------------------------------
+  Auditor:                   [Not Specified]
+  Language:                  en
+  Test category:             all
+  Test group:                all
+  ---------------------------------------------------
+[2C- Program update status... [32C [ SKIPPED ]
+
+      ===============================================================================
+        Lynis update available
+      ===============================================================================
+
+        Current version is more than 4 months old
+
+        Please update to the latest version.
+        New releases include additional features, bug fixes, tests, and baselines.
+
+        Download the latest version:
+
+        Packages (DEB/RPM) -  https://packages.cisofy.com
+        Website (TAR)      -  https://cisofy.com/downloads/
+        GitHub (source)    -  https://github.com/CISOfy/lynis
+
+      ===============================================================================
+
+
+[+] System Tools
+------------------------------------
+[2C- Scanning available tools...[30C
+[2C- Checking system binaries...[30C
+
+[+] Plugins (phase 1)
+------------------------------------
+[0CNote: plugins have more extensive tests and may take several minutes to complete[0C
+[0C [0C
+[2C- Plugin: debian[43C
+    [
+[+] Debian Tests
+------------------------------------
+[2C- Checking for system binaries that are required by Debian Tests...[0C
+[4C- Checking /bin... [38C [ FOUND ]
+[4C- Checking /sbin... [37C [ FOUND ]
+[4C- Checking /usr/bin... [34C [ FOUND ]
+[4C- Checking /usr/sbin... [33C [ FOUND ]
+[4C- Checking /usr/local/bin... [28C [ FOUND ]
+[4C- Checking /usr/local/sbin... [27C [ FOUND ]
+[2C- Authentication:[42C
+[4C- PAM (Pluggable Authentication Modules):[16C
+[6C- libpam-tmpdir[40C [ Not Installed ]
+[6C- libpam-usb[43C [ Not Installed ]
+[2C- File System Checks:[38C
+[4C- DM-Crypt, Cryptsetup & Cryptmount:[21C
+[2C- Software:[48C
+[4C- apt-listbugs[43C [ Not Installed ]
+[4C- apt-listchanges[40C [ Not Installed ]
+[4C- checkrestart[43C [ Not Installed ]
+[4C- needrestart[44C [ Not Installed ]
+[4C- debsecan[47C [ Not Installed ]
+[4C- debsums[48C [ Not Installed ]
+[4C- fail2ban[47C [ Not Installed ]
+]
+
+[+] Boot and services
+------------------------------------
+[2C- Service Manager[42C [ upstart ]
+[2C- Checking UEFI boot[39C [ DISABLED ]
+[4C- Boot loader[44C [ NONE FOUND ]
+[2C- Check running services (systemctl)[23C [ DONE ]
+[8CResult: found 11 running services[20C
+[2C- Check enabled services at boot (systemctl)[15C [ DONE ]
+[8CResult: found 14 enabled services[20C
+[2C- Check startup files (permissions)[24C [ OK ]
+[2C- Checking sulogin in rescue.service[23C [ NOT FOUND ]
+
+[+] Kernel
+------------------------------------
+[2C- Checking default run level[31C [ RUNLEVEL 5 ]
+[2C- Checking CPU support (NX/PAE)[28C
+[4CCPU support: PAE and/or NoeXecute supported[14C [ FOUND ]
+[2C- Checking kernel version and release[22C [ DONE ]
+[2C- Checking Linux kernel configuration file[17C [ NOT FOUND ]
+[2C- Checking for available kernel update[21C [ UNKNOWN ]
+[2C- Checking core dumps configuration[24C [ DISABLED ]
+[4C- Checking setuid core dumps configuration[15C [ PROTECTED ]
+[2C- Check if reboot is needed[32C [ UNKNOWN ]
+
+[+] Memory and Processes
+------------------------------------
+[2C- Checking /proc/meminfo[35C [ FOUND ]
+[2C- Searching for dead/zombie processes[22C [ OK ]
+[2C- Searching for IO waiting processes[23C [ OK ]
+
+[+] Users, Groups and Authentication
+------------------------------------
+[2C- Administrator accounts[35C [ OK ]
+[2C- Unique UIDs[46C [ OK ]
+[2C- Consistency of group files (grpck)[23C [ OK ]
+[2C- Unique group IDs[41C [ OK ]
+[2C- Unique group names[39C [ OK ]
+[2C- Password file consistency[32C [ OK ]
+[2C- Query system users (non daemons)[25C [ DONE ]
+[2C- NIS+ authentication support[30C [ NOT ENABLED ]
+[2C- NIS authentication support[31C [ NOT ENABLED ]
+[2C- sudoers file[45C [ FOUND ]
+[4C- Check sudoers file permissions[25C [ OK ]
+[2C- PAM password strength tools[30C [ SUGGESTION ]
+[2C- PAM configuration files (pam.conf)[23C [ FOUND ]
+[2C- PAM configuration files (pam.d)[26C [ FOUND ]
+[2C- PAM modules[46C [ FOUND ]
+[2C- LDAP module in PAM[39C [ NOT FOUND ]
+[2C- Accounts without expire date[29C [ OK ]
+[2C- Accounts without password[32C [ OK ]
+[2C- Checking user password aging (minimum)[19C [ DISABLED ]
+[2C- User password aging (maximum)[28C [ DISABLED ]
+[2C- Checking expired passwords[31C [ OK ]
+[2C- Checking Linux single user mode authentication[11C [ WARNING ]
+[2C- Determining default umask[32C
+[4C- umask (/etc/profile)[35C [ NOT FOUND ]
+[4C- umask (/etc/login.defs)[32C [ SUGGESTION ]
+[2C- LDAP authentication support[30C [ NOT ENABLED ]
+[2C- Logging failed login attempts[28C [ ENABLED ]
+
+[+] Shells
+------------------------------------
+[2C- Checking shells from /etc/shells[25C
+[4CResult: found 7 shells (valid shells: 7).[16C
+[4C- Session timeout settings/tools[25C [ NONE ]
+[2C- Checking default umask values[28C
+[4C- Checking default umask in /etc/bash.bashrc[13C [ NONE ]
+[4C- Checking default umask in /etc/profile[17C [ NONE ]
+
+[+] File systems
+------------------------------------
+[2C- Checking mount points[36C
+[4C- Checking /home mount point[29C [ SUGGESTION ]
+[4C- Checking /tmp mount point[30C [ SUGGESTION ]
+[4C- Checking /var mount point[30C [ SUGGESTION ]
+[2C- Query swap partitions (fstab)[28C [ NONE ]
+[2C- Testing swap partitions[34C [ OK ]
+[2C- Testing /proc mount (hidepid)[28C [ SUGGESTION ]
+[2C- Checking for old files in /tmp[27C [ OK ]
+[2C- Checking /tmp sticky bit[33C [ OK ]
+[2C- Checking /var/tmp sticky bit[29C [ OK ]
+[2C- ACL support root file system[29C [ ENABLED ]
+
+[+] USB Devices
+------------------------------------
+[2C- Checking usb-storage driver (modprobe config)[12C [ NOT DISABLED ]
+[2C- Checking USB devices authorization[23C [ ENABLED ]
+[2C- Checking USBGuard[40C [ NOT FOUND ]
+
+[+] Storage
+------------------------------------
+[2C- Checking firewire ohci driver (modprobe config)[10C [ NOT DISABLED ]
+
+[+] NFS
+------------------------------------
+[2C- Check running NFS daemon[33C [ NOT FOUND ]
+
+[+] Name services
+------------------------------------
+[2C- Checking search domains[34C [ FOUND ]
+[2C- Checking /etc/resolv.conf options[24C [ FOUND ]
+[2C- Searching DNS domain name[32C [ UNKNOWN ]
+[2C- Checking /etc/hosts[38C
+[4C- Checking /etc/hosts (duplicates)[23C [ OK ]
+[4C- Checking /etc/hosts (hostname)[25C [ OK ]
+[4C- Checking /etc/hosts (localhost)[24C [ OK ]
+[4C- Checking /etc/hosts (localhost to IP)[18C [ OK ]
+
+[+] Ports and packages
+------------------------------------
+[2C- Searching package managers[31C
+[4C- Searching dpkg package manager[25C [ FOUND ]
+[6C- Querying package manager[29C
+[4C- Query unpurged packages[32C [ NONE ]
+[2C- Checking security repository in sources.list file[8C [ OK ]
+[2C- Checking APT package database[28C [ OK ]
+[2C- Checking vulnerable packages (apt-get only)[14C [ DONE ]
+[2C- Checking upgradeable packages[28C [ FOUND ]
+[2C- Checking package audit tool[30C [ INSTALLED ]
+[4CFound: apt-get[43C
+
+[+] Networking
+------------------------------------
+[2C- Checking IPv6 configuration[30C [ ENABLED ]
+[6CConfiguration method[35C [ AUTO ]
+[6CIPv6 only[46C [ NO ]
+[2C- Checking configured nameservers[26C
+[4C- Testing nameservers[36C
+[6CNameserver: 127.0.0.11[33C [ SKIPPED ]
+[4C- Minimal of 2 responsive nameservers[20C [ SKIPPED ]
+[2C- Checking default gateway[33C [ DONE ]
+[2C- Getting listening ports (TCP/UDP)[24C [ DONE ]
+[6C* Found 10 ports[39C
+[2C- Checking promiscuous interfaces[26C [ OK ]
+[2C- Checking waiting connections[29C [ OK ]
+[2C- Checking status DHCP client[30C [ NOT ACTIVE ]
+[2C- Checking for ARP monitoring software[21C [ NOT FOUND ]
+
+[+] Printers and Spools
+------------------------------------
+[2C- Checking cups daemon[37C [ NOT FOUND ]
+[2C- Checking lp daemon[39C [ NOT RUNNING ]
+
+[+] Software: e-mail and messaging
+------------------------------------
+[2C- Postfix status[43C [ RUNNING ]
+[4C- Postfix configuration[34C [ FOUND ]
+[6C- Postfix banner[39C [ WARNING ]
+
+[+] Software: firewalls
+------------------------------------
+[2C- Checking iptables support[32C [ FOUND ]
+[4C- Checking iptables policies of chains[19C [ FOUND ]
+[4C- Checking for empty ruleset[29C [ WARNING ]
+[4C- Checking for unused rules[30C [ OK ]
+[2C- Checking host based firewall[29C [ ACTIVE ]
+
+[+] Software: webserver
+------------------------------------
+[2C- Checking Apache[42C [ NOT FOUND ]
+[2C- Checking nginx[43C [ FOUND ]
+[4C- Searching nginx configuration file[21C [ FOUND ]
+[6C- Found nginx includes[33C [ 6 FOUND ]
+[4C- Parsing configuration options[26C
+[8C- /etc/nginx/nginx.conf[30C
+[8C- /etc/nginx/modules-enabled/50-mod-http-image-filter.conf[0C
+[8C- /etc/nginx/modules-enabled/50-mod-http-xslt-filter.conf[0C
+[8C- /etc/nginx/modules-enabled/50-mod-mail.conf[8C
+[8C- /etc/nginx/modules-enabled/50-mod-stream.conf[6C
+[8C- /etc/nginx/sites-enabled/default[19C
+[6C- SSL configured[39C [ NO ]
+[6C- Checking log file configuration[22C
+[8C- Missing log files (access_log)[21C [ NO ]
+[8C- Disabled access logging[28C [ NO ]
+[8C- Missing log files (error_log)[22C [ NO ]
+[8C- Debugging mode on error_log[24C [ NO ]
+
+[+] SSH Support
+------------------------------------
+[2C- Checking running SSH daemon[30C [ FOUND ]
+[4C- Searching SSH configuration[28C [ FOUND ]
+[4C- SSH option: AllowTcpForwarding[25C [ SUGGESTION ]
+[4C- SSH option: ClientAliveCountMax[24C [ SUGGESTION ]
+[4C- SSH option: ClientAliveInterval[24C [ OK ]
+[4C- SSH option: Compression[32C [ SUGGESTION ]
+[4C- SSH option: FingerprintHash[28C [ OK ]
+[4C- SSH option: GatewayPorts[31C [ OK ]
+[4C- SSH option: IgnoreRhosts[31C [ OK ]
+[4C- SSH option: LoginGraceTime[29C [ OK ]
+[4C- SSH option: LogLevel[35C [ SUGGESTION ]
+[4C- SSH option: MaxAuthTries[31C [ SUGGESTION ]
+[4C- SSH option: MaxSessions[32C [ SUGGESTION ]
+[4C- SSH option: PermitRootLogin[28C [ SUGGESTION ]
+[4C- SSH option: PermitUserEnvironment[22C [ OK ]
+[4C- SSH option: PermitTunnel[31C [ OK ]
+[4C- SSH option: Port[39C [ SUGGESTION ]
+[4C- SSH option: PrintLastLog[31C [ OK ]
+[4C- SSH option: Protocol[35C [ NOT FOUND ]
+[4C- SSH option: StrictModes[32C [ OK ]
+[4C- SSH option: TCPKeepAlive[31C [ SUGGESTION ]
+[4C- SSH option: UseDNS[37C [ OK ]
+[4C- SSH option: UsePrivilegeSeparation[21C [ NOT FOUND ]
+[4C- SSH option: VerifyReverseMapping[23C [ NOT FOUND ]
+[4C- SSH option: X11Forwarding[30C [ SUGGESTION ]
+[4C- SSH option: AllowAgentForwarding[23C [ SUGGESTION ]
+[4C- SSH option: AllowUsers[33C [ NOT FOUND ]
+[4C- SSH option: AllowGroups[32C [ NOT FOUND ]
+
+[+] SNMP Support
+------------------------------------
+[2C- Checking running SNMP daemon[29C [ NOT FOUND ]
+
+[+] Databases
+------------------------------------
+[4CNo database engines found[32C
+
+[+] LDAP Services
+------------------------------------
+[2C- Checking OpenLDAP instance[31C [ NOT FOUND ]
+
+[+] PHP
+------------------------------------
+[2C- Checking PHP[45C [ NOT FOUND ]
+
+[+] Squid Support
+------------------------------------
+[2C- Checking running Squid daemon[28C [ NOT FOUND ]
+
+[+] Logging and files
+------------------------------------
+[2C- Checking for a running log daemon[24C [ OK ]
+[4C- Checking Syslog-NG status[30C [ NOT FOUND ]
+[4C- Checking systemd journal status[24C [ FOUND ]
+[4C- Checking Metalog status[32C [ NOT FOUND ]
+[4C- Checking RSyslog status[32C [ NOT FOUND ]
+[4C- Checking RFC 3195 daemon status[24C [ NOT FOUND ]
+[4C- Checking minilogd instances[28C [ NOT FOUND ]
+[2C- Checking logrotate presence[30C [ OK ]
+[2C- Checking log directories (static list)[19C [ DONE ]
+[2C- Checking open log files[34C [ SKIPPED ]
+
+[+] Insecure services
+------------------------------------
+[2C- Checking inetd status[36C [ NOT ACTIVE ]
+
+[+] Banners and identification
+------------------------------------
+[2C- /etc/issue[47C [ FOUND ]
+[4C- /etc/issue contents[36C [ WEAK ]
+[2C- /etc/issue.net[43C [ FOUND ]
+[4C- /etc/issue.net contents[32C [ WEAK ]
+
+[+] Scheduled tasks
+------------------------------------
+[2C- Checking crontab/cronjob[33C [ DONE ]
+
+[+] Accounting
+------------------------------------
+[2C- Checking accounting information[26C [ NOT FOUND ]
+[2C- Checking sysstat accounting data[25C [ NOT FOUND ]
+[2C- Checking auditd[42C [ NOT FOUND ]
+
+[+] Time and Synchronization
+------------------------------------
+[2C- NTP daemon found: systemd (timesyncd)[20C [ FOUND ]
+[2C- Checking for a running NTP daemon or client[14C [ OK ]
+
+[+] Cryptography
+------------------------------------
+[2C- Checking for expired SSL certificates [0/2][14C [ NONE ]
+
+[+] Virtualization
+------------------------------------
+
+[+] Containers
+------------------------------------
+
+[+] Security frameworks
+------------------------------------
+[2C- Checking presence AppArmor[31C [ FOUND ]
+[4C- Checking AppArmor status[31C [ ENABLED ]
+[2C- Checking presence SELinux[32C [ NOT FOUND ]
+[2C- Checking presence grsecurity[29C [ NOT FOUND ]
+[2C- Checking for implemented MAC framework[19C [ OK ]
+
+[+] Software: file integrity
+------------------------------------
+[2C- Checking file integrity tools[28C
+[4C- AIDE[51C [ FOUND ]
+[6C- AIDE config file[37C [ FOUND ]
+[6C- AIDE config (Checksum)[31C [ OK ]
+[2C- Checking presence integrity tool[25C [ FOUND ]
+
+[+] Software: System tooling
+------------------------------------
+[2C- Checking automation tooling[30C
+[2C- Automation tooling[39C [ NOT FOUND ]
+[2C- Checking for IDS/IPS tooling[29C [ NONE ]
+
+[+] Software: Malware
+------------------------------------
+
+[+] File Permissions
+------------------------------------
+[2C- Starting file permissions check[26C
+
+[+] Home directories
+------------------------------------
+[2C- Checking shell history files[29C [ OK ]
+
+[+] Kernel Hardening
+------------------------------------
+[2C- Comparing sysctl key pairs with scan profile[13C
+[4C- fs.protected_hardlinks (exp: 1)[24C [ OK ]
+[4C- fs.protected_symlinks (exp: 1)[25C [ OK ]
+[4C- fs.suid_dumpable (exp: 0)[30C [ DIFFERENT ]
+[4C- kernel.core_uses_pid (exp: 1)[26C [ OK ]
+[4C- kernel.ctrl-alt-del (exp: 0)[27C [ OK ]
+[4C- kernel.dmesg_restrict (exp: 1)[25C [ OK ]
+[4C- kernel.kptr_restrict (exp: 2)[26C [ DIFFERENT ]
+[4C- kernel.randomize_va_space (exp: 2)[21C [ OK ]
+[4C- kernel.sysrq (exp: 0)[34C [ DIFFERENT ]
+[4C- kernel.yama.ptrace_scope (exp: 1 2 3)[18C [ OK ]
+[4C- net.ipv4.conf.all.accept_redirects (exp: 0)[12C [ OK ]
+[4C- net.ipv4.conf.all.accept_source_route (exp: 0)[9C [ OK ]
+[4C- net.ipv4.conf.all.bootp_relay (exp: 0)[17C [ OK ]
+[4C- net.ipv4.conf.all.forwarding (exp: 0)[18C [ DIFFERENT ]
+[4C- net.ipv4.conf.all.log_martians (exp: 1)[16C [ DIFFERENT ]
+[4C- net.ipv4.conf.all.mc_forwarding (exp: 0)[15C [ OK ]
+[4C- net.ipv4.conf.all.proxy_arp (exp: 0)[19C [ OK ]
+[4C- net.ipv4.conf.all.rp_filter (exp: 1)[19C [ DIFFERENT ]
+[4C- net.ipv4.conf.all.send_redirects (exp: 0)[14C [ DIFFERENT ]
+[4C- net.ipv4.conf.default.accept_redirects (exp: 0)[8C [ DIFFERENT ]
+[4C- net.ipv4.conf.default.accept_source_route (exp: 0)[5C [ OK ]
+[4C- net.ipv4.conf.default.log_martians (exp: 1)[12C [ DIFFERENT ]
+[4C- net.ipv4.icmp_echo_ignore_broadcasts (exp: 1)[10C [ OK ]
+[4C- net.ipv4.icmp_ignore_bogus_error_responses (exp: 1)[4C [ OK ]
+[4C- net.ipv4.tcp_syncookies (exp: 1)[23C [ OK ]
+[4C- net.ipv4.tcp_timestamps (exp: 0 1)[21C [ OK ]
+[4C- net.ipv6.conf.all.accept_redirects (exp: 0)[12C [ DIFFERENT ]
+[4C- net.ipv6.conf.all.accept_source_route (exp: 0)[9C [ OK ]
+[4C- net.ipv6.conf.default.accept_redirects (exp: 0)[8C [ DIFFERENT ]
+[4C- net.ipv6.conf.default.accept_source_route (exp: 0)[5C [ OK ]
+
+[+] Hardening
+------------------------------------
+[4C- Installed compiler(s)[34C [ NOT FOUND ]
+[4C- Installed malware scanner[30C [ NOT FOUND ]
+
+[+] Custom Tests
+------------------------------------
+[2C- Running custom tests... [33C [ NONE ]
+
+[+] Plugins (phase 2)
+------------------------------------
+
+================================================================================
+
+  -[ Lynis 2.6.2 Results ]-
+
+  Warnings (3):
+  ----------------------------
+  ! No password set for single mode [AUTH-9308] 
+      https://cisofy.com/controls/AUTH-9308/
+
+  ! Found some information disclosure in SMTP banner (OS or software name) [MAIL-8818] 
+      https://cisofy.com/controls/MAIL-8818/
+
+  ! iptables module(s) loaded, but no rules active [FIRE-4512] 
+      https://cisofy.com/controls/FIRE-4512/
+
+  Suggestions (48):
+  ----------------------------
+  * This release is more than 4 months old. Consider upgrading [LYNIS] 
+      https://cisofy.com/controls/LYNIS/
+
+  * Install libpam-tmpdir to set $TMP and $TMPDIR for PAM sessions [CUST-0280] 
+      https://your-domain.example.org/controls/CUST-0280/
+
+  * Install libpam-usb to enable multi-factor authentication for PAM sessions [CUST-0285] 
+      https://your-domain.example.org/controls/CUST-0285/
+
+  * Install apt-listbugs to display a list of critical bugs prior to each APT installation. [CUST-0810] 
+      https://your-domain.example.org/controls/CUST-0810/
+
+  * Install apt-listchanges to display any significant changes prior to any upgrade via APT. [CUST-0811] 
+      https://your-domain.example.org/controls/CUST-0811/
+
+  * Install debian-goodies so that you can run checkrestart after upgrades to determine which services are using old versions of libraries and need restarting. [CUST-0830] 
+      https://your-domain.example.org/controls/CUST-0830/
+
+  * Install needrestart, alternatively to debian-goodies, so that you can run needrestart after upgrades to determine which daemons are using old versions of libraries and need restarting. [CUST-0831] 
+      https://your-domain.example.org/controls/CUST-0831/
+
+  * Install debsecan to generate lists of vulnerabilities which affect this installation. [CUST-0870] 
+      https://your-domain.example.org/controls/CUST-0870/
+
+  * Install debsums for the verification of installed package files against MD5 checksums. [CUST-0875] 
+      https://your-domain.example.org/controls/CUST-0875/
+
+  * Install fail2ban to automatically ban hosts that commit multiple authentication errors. [DEB-0880] 
+      https://cisofy.com/controls/DEB-0880/
+
+  * Protect rescue.service by using sulogin [BOOT-5260] 
+      https://cisofy.com/controls/BOOT-5260/
+
+  * Determine why /vmlinuz is missing on this Debian/Ubuntu system. [KRNL-5788] 
+    - Details  : /vmlinuz
+      https://cisofy.com/controls/KRNL-5788/
+
+  * Check the output of apt-cache policy manually to determine why output is empty [KRNL-5788] 
+      https://cisofy.com/controls/KRNL-5788/
+
+  * Install a PAM module for password strength testing like pam_cracklib or pam_passwdqc [AUTH-9262] 
+      https://cisofy.com/controls/AUTH-9262/
+
+  * Configure minimum password age in /etc/login.defs [AUTH-9286] 
+      https://cisofy.com/controls/AUTH-9286/
+
+  * Configure maximum password age in /etc/login.defs [AUTH-9286] 
+      https://cisofy.com/controls/AUTH-9286/
+
+  * Set password for single user mode to minimize physical access attack surface [AUTH-9308] 
+      https://cisofy.com/controls/AUTH-9308/
+
+  * Default umask in /etc/login.defs could be more strict like 027 [AUTH-9328] 
+      https://cisofy.com/controls/AUTH-9328/
+
+  * To decrease the impact of a full /home file system, place /home on a separated partition [FILE-6310] 
+      https://cisofy.com/controls/FILE-6310/
+
+  * To decrease the impact of a full /tmp file system, place /tmp on a separated partition [FILE-6310] 
+      https://cisofy.com/controls/FILE-6310/
+
+  * To decrease the impact of a full /var file system, place /var on a separated partition [FILE-6310] 
+      https://cisofy.com/controls/FILE-6310/
+
+  * Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft [STRG-1840] 
+      https://cisofy.com/controls/STRG-1840/
+
+  * Disable drivers like firewire storage when not used, to prevent unauthorized storage or data theft [STRG-1846] 
+      https://cisofy.com/controls/STRG-1846/
+
+  * Check DNS configuration for the dns domain name [NAME-4028] 
+      https://cisofy.com/controls/NAME-4028/
+
+  * Install debsums utility for the verification of packages with known good database. [PKGS-7370] 
+      https://cisofy.com/controls/PKGS-7370/
+
+  * Consider running ARP monitoring software (arpwatch,arpon) [NETW-3032] 
+      https://cisofy.com/controls/NETW-3032/
+
+  * You are advised to hide the mail_name (option: smtpd_banner) from your postfix configuration. Use postconf -e or change your main.cf file (/etc/postfix/main.cf) [MAIL-8818] 
+      https://cisofy.com/controls/MAIL-8818/
+
+  * Disable the 'VRFY' command [MAIL-8820:disable_vrfy_command] 
+    - Details  : disable_vrfy_command=no
+    - Solution : run postconf -e disable_vrfy_command=yes to change the value
+      https://cisofy.com/controls/MAIL-8820/
+
+  * Add HTTPS to nginx virtual hosts for enhanced protection of sensitive data and privacy [HTTP-6710] 
+      https://cisofy.com/controls/HTTP-6710/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : AllowTcpForwarding (YES --> NO)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : ClientAliveCountMax (3 --> 2)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : Compression (YES --> (DELAYED|NO))
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : LogLevel (INFO --> VERBOSE)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : MaxAuthTries (6 --> 2)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : MaxSessions (10 --> 2)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : PermitRootLogin (YES --> NO)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : Port (22 --> )
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : TCPKeepAlive (YES --> NO)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : X11Forwarding (YES --> NO)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Consider hardening SSH configuration [SSH-7408] 
+    - Details  : AllowAgentForwarding (YES --> NO)
+      https://cisofy.com/controls/SSH-7408/
+
+  * Add a legal banner to /etc/issue, to warn unauthorized users [BANN-7126] 
+      https://cisofy.com/controls/BANN-7126/
+
+  * Add legal banner to /etc/issue.net, to warn unauthorized users [BANN-7130] 
+      https://cisofy.com/controls/BANN-7130/
+
+  * Enable process accounting [ACCT-9622] 
+      https://cisofy.com/controls/ACCT-9622/
+
+  * Enable sysstat to collect accounting (no results) [ACCT-9626] 
+      https://cisofy.com/controls/ACCT-9626/
+
+  * Enable auditd to collect audit information [ACCT-9628] 
+      https://cisofy.com/controls/ACCT-9628/
+
+  * Determine if automation tools are present for system management [TOOL-5002] 
+      https://cisofy.com/controls/TOOL-5002/
+
+  * One or more sysctl values differ from the scan profile and could be tweaked [KRNL-6000] 
+    - Solution : Change sysctl value or disable test (skip-test=KRNL-6000:<sysctl-key>)
+      https://cisofy.com/controls/KRNL-6000/
+
+  * Harden the system by installing at least one malware scanner, to perform periodic file system scans [HRDN-7230] 
+    - Solution : Install a tool like rkhunter, chkrootkit, OSSEC
+      https://cisofy.com/controls/HRDN-7230/
+
+  Follow-up:
+  ----------------------------
+  - Show details of a test (lynis show details TEST-ID)
+  - Check the logfile for all details (less /var/log/lynis.log)
+  - Read security controls texts (https://cisofy.com)
+  - Use --upload to upload data to central system (Lynis Enterprise users)
+
+================================================================================
+
+  Lynis security scan details:
+
+  Hardening index : 58 [###########         ]
+  Tests performed : 224
+  Plugins enabled : 1
+
+  Components:
+  - Firewall               [V]
+  - Malware scanner        [X]
+
+  Lynis Modules:
+  - Compliance Status      [?]
+  - Security Audit         [V]
+  - Vulnerability Scan     [V]
+
+  Files:
+  - Test and debug information      : /var/log/lynis.log
+  - Report data                     : /var/log/lynis-report.dat
+
+================================================================================
+
+  Exceptions found
+  Some exceptional events or information was found!
+
+  What to do:
+  You can help by providing your log file (/var/log/lynis.log).
+  Go to https://cisofy.com/contact/ and send your file to the e-mail address listed
+
+================================================================================
+
+  Lynis 2.6.2
+
+  Auditing, system hardening, and compliance for UNIX-based systems
+  (Linux, macOS, BSD, and others)
+
+  2007-2018, CISOfy - https://cisofy.com/lynis/
+  Enterprise support available (compliance, plugins, interface and tools)
+
+================================================================================
+
+  [TIP]: Enhance Lynis audits by adding your settings to custom.prf (see /etc/lynis/default.prf for all settings)
+
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep hardening_index /var/log/lynis-report.dat
+[01;31m[Khardening_index[m[K=58
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep '^warning\[\]' /var/log/lynis-report.dat
+[01;31m[Kwarning[][m[K=AUTH-9308|No password set for single mode|-|-|
+[01;31m[Kwarning[][m[K=MAIL-8818|Found some information disclosure in SMTP banner (OS or software name)|-|-|
+[01;31m[Kwarning[][m[K=FIRE-4512|iptables module(s) loaded, but no rules active|-|-|
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kgrep '^suggestion\[\]' /var/log/lynis-report.dat
+[01;31m[Ksuggestion[][m[K=LYNIS|This release is more than 4 months old. Consider upgrading|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0280|Install libpam-tmpdir to set $TMP and $TMPDIR for PAM sessions|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0285|Install libpam-usb to enable multi-factor authentication for PAM sessions|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0810|Install apt-listbugs to display a list of critical bugs prior to each APT installation.|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0811|Install apt-listchanges to display any significant changes prior to any upgrade via APT.|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0830|Install debian-goodies so that you can run checkrestart after upgrades to determine which services are using old versions of libraries and need restarting.|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0831|Install needrestart, alternatively to debian-goodies, so that you can run needrestart after upgrades to determine which daemons are using old versions of libraries and need restarting.|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0870|Install debsecan to generate lists of vulnerabilities which affect this installation.|-|-|
+[01;31m[Ksuggestion[][m[K=CUST-0875|Install debsums for the verification of installed package files against MD5 checksums.|-|-|
+[01;31m[Ksuggestion[][m[K=DEB-0880|Install fail2ban to automatically ban hosts that commit multiple authentication errors.|-|-|
+[01;31m[Ksuggestion[][m[K=BOOT-5260|Protect rescue.service by using sulogin|-|-|
+[01;31m[Ksuggestion[][m[K=KRNL-5788|Determine why /vmlinuz is missing on this Debian/Ubuntu system.|/vmlinuz|-|
+[01;31m[Ksuggestion[][m[K=KRNL-5788|Check the output of apt-cache policy manually to determine why output is empty|-|-|
+[01;31m[Ksuggestion[][m[K=AUTH-9262|Install a PAM module for password strength testing like pam_cracklib or pam_passwdqc|-|-|
+[01;31m[Ksuggestion[][m[K=AUTH-9286|Configure minimum password age in /etc/login.defs|-|-|
+[01;31m[Ksuggestion[][m[K=AUTH-9286|Configure maximum password age in /etc/login.defs|-|-|
+[01;31m[Ksuggestion[][m[K=AUTH-9308|Set password for single user mode to minimize physical access attack surface|-|-|
+[01;31m[Ksuggestion[][m[K=AUTH-9328|Default umask in /etc/login.defs could be more strict like 027|-|-|
+[01;31m[Ksuggestion[][m[K=FILE-6310|To decrease the impact of a full /home file system, place /home on a separated partition|-|-|
+[01;31m[Ksuggestion[][m[K=FILE-6310|To decrease the impact of a full /tmp file system, place /tmp on a separated partition|-|-|
+[01;31m[Ksuggestion[][m[K=FILE-6310|To decrease the impact of a full /var file system, place /var on a separated partition|-|-|
+[01;31m[Ksuggestion[][m[K=STRG-1840|Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft|-|-|
+[01;31m[Ksuggestion[][m[K=STRG-1846|Disable drivers like firewire storage when not used, to prevent unauthorized storage or data theft|-|-|
+[01;31m[Ksuggestion[][m[K=NAME-4028|Check DNS configuration for the dns domain name|-|-|
+[01;31m[Ksuggestion[][m[K=PKGS-7370|Install debsums utility for the verification of packages with known good database.|-|-|
+[01;31m[Ksuggestion[][m[K=NETW-3032|Consider running ARP monitoring software (arpwatch,arpon)|-|-|
+[01;31m[Ksuggestion[][m[K=MAIL-8818|You are advised to hide the mail_name (option: smtpd_banner) from your postfix configuration. Use postconf -e or change your main.cf file (/etc/postfix/main.cf)|-|-|
+[01;31m[Ksuggestion[][m[K=MAIL-8820:disable_vrfy_command|Disable the 'VRFY' command|disable_vrfy_command=no|text:run postconf -e disable_vrfy_command=yes to change the value|
+[01;31m[Ksuggestion[][m[K=HTTP-6710|Add HTTPS to nginx virtual hosts for enhanced protection of sensitive data and privacy|-|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|AllowTcpForwarding (YES --> NO)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|ClientAliveCountMax (3 --> 2)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|Compression (YES --> (DELAYED|NO))|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|LogLevel (INFO --> VERBOSE)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|MaxAuthTries (6 --> 2)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|MaxSessions (10 --> 2)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|PermitRootLogin (YES --> NO)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|Port (22 --> )|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|TCPKeepAlive (YES --> NO)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|X11Forwarding (YES --> NO)|-|
+[01;31m[Ksuggestion[][m[K=SSH-7408|Consider hardening SSH configuration|AllowAgentForwarding (YES --> NO)|-|
+[01;31m[Ksuggestion[][m[K=BANN-7126|Add a legal banner to /etc/issue, to warn unauthorized users|-|-|
+[01;31m[Ksuggestion[][m[K=BANN-7130|Add legal banner to /etc/issue.net, to warn unauthorized users|-|-|
+[01;31m[Ksuggestion[][m[K=ACCT-9622|Enable process accounting|-|-|
+[01;31m[Ksuggestion[][m[K=ACCT-9626|Enable sysstat to collect accounting (no results)|-|-|
+[01;31m[Ksuggestion[][m[K=ACCT-9628|Enable auditd to collect audit information|-|-|
+[01;31m[Ksuggestion[][m[K=TOOL-5002|Determine if automation tools are present for system management|-|-|
+[01;31m[Ksuggestion[][m[K=KRNL-6000|One or more sysctl values differ from the scan profile and could be tweaked||Change sysctl value or disable test (skip-test=KRNL-6000:<sysctl-key>)|
+[01;31m[Ksuggestion[][m[K=HRDN-7230|Harden the system by installing at least one malware scanner, to perform periodic file system scans|-|Install a tool like rkhunter, chkrootkit, OSSEC|
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kcp /var/log/lynis-report.dat /root/evidencias/lynis-report_antes.dat
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kcp /var/log/lynis.log /root/evidencias/lynis_antes.log
+]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kapt install -y rkhunter chkrootkit debsums
+Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 3%Reading package lists... 3%Reading package lists... 3%Reading package lists... 3%Reading package lists... 35%Reading package lists... 35%Reading package lists... 35%Reading package lists... 35%Reading package lists... 49%Reading package lists... 49%Reading package lists... 58%Reading package lists... 64%Reading package lists... 64%Reading package lists... 68%Reading package lists... 68%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 69%Reading package lists... 81%Reading package lists... 81%Reading package lists... 95%Reading package lists... 95%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Reading state information... 0%Reading state information... 0%Reading state information... Done
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu file fonts-lato javascript-common libbinutils libctf-nobfd0
+  libctf0 libdpkg-perl libfile-fcntllock-perl libfile-fnmatch-perl libjs-jquery liblocale-gettext-perl libmagic-mgc
+  libmagic1 libruby2.7 lsof rake ruby ruby-minitest ruby-net-telnet ruby-power-assert ruby-test-unit ruby-xmlrpc
+  ruby2.7 rubygems-integration unhide unhide.rb unzip wget zip
+Suggested packages:
+  binutils-doc debian-keyring gnupg | gnupg2 gcc | c-compiler patch git bzr liburi-perl libwww-perl powermgmt-base ri
+  ruby-dev bundler
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu chkrootkit debsums file fonts-lato javascript-common libbinutils
+  libctf-nobfd0 libctf0 libdpkg-perl libfile-fcntllock-perl libfile-fnmatch-perl libjs-jquery liblocale-gettext-perl
+  libmagic-mgc libmagic1 libruby2.7 lsof rake rkhunter ruby ruby-minitest ruby-net-telnet ruby-power-assert
+  ruby-test-unit ruby-xmlrpc ruby2.7 rubygems-integration unhide unhide.rb unzip wget zip
+0 upgraded, 35 newly installed, 0 to remove and 2 not upgraded.
+Need to get 11.5 MB of archives.
+After this operation, 59.0 MB of additional disk space will be used.
+[33m0% [Working][0m            Get:1 http://archive.ubuntu.com/ubuntu focal/main amd64 liblocale-gettext-perl amd64 1.07-4 [17.1 kB]
+[33m0% [1 liblocale-gettext-perl 6950 B/17.1 kB 41%][0m[33m                                                1% [Working][0m            Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 fonts-lato all 2.0-2 [2698 kB]
+[33m1% [2 fonts-lato 2602 B/2698 kB 0%][0m[33m2% [2 fonts-lato 156 kB/2698 kB 6%][0m[33m6% [2 fonts-lato 798 kB/2698 kB 30%][0m[33m11% [2 fonts-lato 1543 kB/2698 kB 57%][0m[33m17% [2 fonts-lato 2273 kB/2698 kB 84%][0m[33m                                      20% [Working][0m             Get:3 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 binutils-common amd64 2.34-6ubuntu1.11 [208 kB]
+[33m20% [3 binutils-common 2389 B/208 kB 1%][0m[33m                                        22% [Working][0m             Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libbinutils amd64 2.34-6ubuntu1.11 [475 kB]
+[33m22% [4 libbinutils 8396 B/475 kB 2%][0m[33m23% [4 libbinutils 82.2 kB/475 kB 17%][0m[33m                                      26% [Working][0m             Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libctf-nobfd0 amd64 2.34-6ubuntu1.11 [48.2 kB]
+[33m26% [5 libctf-nobfd0 6950 B/48.2 kB 14%][0m[33m                                        27% [Working][0m             Get:6 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libctf0 amd64 2.34-6ubuntu1.11 [46.6 kB]
+[33m27% [6 libctf0 6950 B/46.6 kB 15%][0m[33m                                  28% [Working][0m             Get:7 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 binutils-x86-64-linux-gnu amd64 2.34-6ubuntu1.11 [1612 kB]
+[33m28% [7 binutils-x86-64-linux-gnu 6946 B/1612 kB 0%][0m[33m33% [7 binutils-x86-64-linux-gnu 786 kB/1612 kB 49%][0m[33m38% [7 binutils-x86-64-linux-gnu 1464 kB/1612 kB 91%]                                                      803 kB/s 8s[0m[33m40% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:8 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 binutils amd64 2.34-6ubuntu1.11 [3380 B]
+[33m40% [8 binutils 3380 B/3380 B 100%]                                                                        803 kB/s 7s[0m[33m40% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:9 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic-mgc amd64 1:5.38-4 [218 kB]
+[33m40% [9 libmagic-mgc 2604 B/218 kB 1%]                                                                      803 kB/s 7s[0m[33m42% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:10 http://archive.ubuntu.com/ubuntu focal/main amd64 libmagic1 amd64 1:5.38-4 [75.9 kB]
+[33m42% [10 libmagic1 4053 B/75.9 kB 5%]                                                                       803 kB/s 7s[0m[33m43% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:11 http://archive.ubuntu.com/ubuntu focal/main amd64 file amd64 1:5.38-4 [23.3 kB]
+[33m43% [11 file 2606 B/23.3 kB 11%]                                                                           803 kB/s 7s[0m[33m44% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 lsof amd64 4.93.2+dfsg-1ubuntu0.20.04.1 [252 kB]
+[33m44% [12 lsof 4052 B/252 kB 2%]                                                                             803 kB/s 7s[0m[33m46% [Working]                                                                                              803 kB/s 7s[0m                                                                                                                      Get:13 http://archive.ubuntu.com/ubuntu focal/universe amd64 rkhunter all 1.4.6-8 [213 kB]
+[33m47% [13 rkhunter 5500 B/213 kB 3%]                                                                         803 kB/s 7s[0m[33m49% [Working]                                                                                              803 kB/s 6s[0m                                                                                                                      Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 wget amd64 1.20.3-1ubuntu2.1 [349 kB]
+[33m49% [14 wget 2604 B/349 kB 1%]                                                                             803 kB/s 6s[0m[33m52% [Working]                                                                                              803 kB/s 6s[0m                                                                                                                      Get:15 http://archive.ubuntu.com/ubuntu focal/universe amd64 chkrootkit amd64 0.53-1 [316 kB]
+[33m52% [15 chkrootkit 2604 B/316 kB 1%]                                                                       803 kB/s 6s[0m[33m54% [Working]                                                                                              803 kB/s 6s[0m                                                                                                                      Get:16 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libdpkg-perl all 1.19.7ubuntu3.2 [231 kB]
+[33m54% [16 libdpkg-perl 4052 B/231 kB 2%]                                                                     803 kB/s 6s[0m[33m56% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:17 http://archive.ubuntu.com/ubuntu focal/universe amd64 libfile-fnmatch-perl amd64 0.02-2build6 [10.1 kB]
+[33m57% [17 libfile-fnmatch-perl 5502 B/10.1 kB 55%]                                                           803 kB/s 5s[0m[33m57% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:18 http://archive.ubuntu.com/ubuntu focal/universe amd64 debsums all 2.2.5 [42.2 kB]
+[33m57% [18 debsums 5502 B/42.2 kB 13%]                                                                        803 kB/s 5s[0m[33m58% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:19 http://archive.ubuntu.com/ubuntu focal/main amd64 javascript-common all 11 [6066 B]
+[33m58% [19 javascript-common 2607 B/6066 B 43%]                                                               803 kB/s 5s[0m[33m59% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:20 http://archive.ubuntu.com/ubuntu focal/main amd64 libfile-fcntllock-perl amd64 0.22-3build4 [33.1 kB]
+[33m59% [20 libfile-fcntllock-perl 5276 B/33.1 kB 16%]                                                         803 kB/s 5s[0m[33m59% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:21 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libjs-jquery all 3.3.1~dfsg-3ubuntu0.1 [329 kB]
+[33m59% [21 libjs-jquery 5500 B/329 kB 2%]                                                                     803 kB/s 5s[0m[33m62% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:22 http://archive.ubuntu.com/ubuntu focal/main amd64 rubygems-integration all 1.16 [5092 B]
+[33m62% [22 rubygems-integration 2607 B/5092 B 51%]                                                            803 kB/s 5s[0m[33m63% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:23 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 ruby2.7 amd64 2.7.0-5ubuntu1.18 [95.6 kB]
+[33m63% [23 ruby2.7 5501 B/95.6 kB 6%]                                                                         803 kB/s 5s[0m[33m64% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:24 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby amd64 1:2.7+1 [5412 B]
+[33m64% [24 ruby 4055 B/5412 B 75%]                                                                            803 kB/s 5s[0m[33m65% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:25 http://archive.ubuntu.com/ubuntu focal/main amd64 rake all 13.0.1-4 [61.6 kB]
+[33m65% [25 rake 4096 B/61.6 kB 7%]                                                                            803 kB/s 5s[0m[33m66% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:26 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby-minitest all 5.13.0-1 [40.9 kB]
+[33m66% [26 ruby-minitest 5502 B/40.9 kB 13%]                                                                  803 kB/s 5s[0m[33m67% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:27 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby-net-telnet all 0.1.1-2 [12.6 kB]
+[33m67% [27 ruby-net-telnet 5502 B/12.6 kB 44%]                                                                803 kB/s 5s[0m[33m67% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:28 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby-power-assert all 1.1.7-1 [11.4 kB]
+[33m67% [28 ruby-power-assert 2606 B/11.4 kB 23%]                                                              803 kB/s 5s[0m[33m68% [Working]                                                                                              803 kB/s 5s[0m                                                                                                                      Get:29 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby-test-unit all 3.3.5-1 [73.2 kB]
+[33m68% [29 ruby-test-unit 4053 B/73.2 kB 6%]                                                                  803 kB/s 5s[0m[33m69% [Working]                                                                                              803 kB/s 4s[0m                                                                                                                      Get:30 http://archive.ubuntu.com/ubuntu focal/main amd64 ruby-xmlrpc all 0.3.0-2 [23.8 kB]
+[33m69% [30 ruby-xmlrpc 2606 B/23.8 kB 11%]                                                                    417 kB/s 9s[0m[33m70% [Working]                                                                                              417 kB/s 9s[0m                                                                                                                      Get:31 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libruby2.7 amd64 2.7.0-5ubuntu1.18 [3535 kB]
+[33m70% [31 libruby2.7 5498 B/3535 kB 0%]                                                                      417 kB/s 9s[0m[33m75% [31 libruby2.7 733 kB/3535 kB 21%]                                                                     417 kB/s 7s[0m[33m80% [31 libruby2.7 1462 kB/3535 kB 41%]                                                                    417 kB/s 5s[0m[33m85% [31 libruby2.7 2185 kB/3535 kB 62%]                                                                    417 kB/s 4s[0m[33m90% [31 libruby2.7 2919 kB/3535 kB 83%]                                                                    417 kB/s 2s[0m[33m95% [Working]                                                                                              417 kB/s 0s[0m                                                                                                                      Get:32 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 unzip amd64 6.0-25ubuntu1.2 [169 kB]
+[33m95% [32 unzip 5500 B/169 kB 3%]                                                                            417 kB/s 0s[0m[33m97% [Working]                                                                                              417 kB/s 0s[0m                                                                                                                      Get:33 http://archive.ubuntu.com/ubuntu focal/main amd64 zip amd64 3.0-11build1 [167 kB]
+[33m97% [33 zip 5500 B/167 kB 3%]                                                                              417 kB/s 0s[0m[33m98% [Working]                                                                                              417 kB/s 0s[0m                                                                                                                      Get:34 http://archive.ubuntu.com/ubuntu focal/universe amd64 unhide amd64 20130526-4 [48.8 kB]
+[33m98% [34 unhide 2606 B/48.8 kB 5%]                                                                          417 kB/s 0s[0m[33m99% [Working]                                                                                              417 kB/s 0s[0m                                                                                                                      Get:35 http://archive.ubuntu.com/ubuntu focal/universe amd64 unhide.rb all 22-4 [8432 B]
+[33m99% [35 unhide.rb 2607 B/8432 B 31%]                                                                       417 kB/s 0s[0m[33m100% [Working]                                                                                             417 kB/s 0s[0m                                                                                                                      Fetched 11.5 MB in 16s (712 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+
+7[0;30r8[1ASelecting previously unselected package liblocale-gettext-perl.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 14320 files and directories currently installed.)
+Preparing to unpack .../00-liblocale-gettext-perl_1.07-4_amd64.deb ...
+7[31;0f[42m[30mProgress: [  0%][49m[39m [.................................................................................................] 8Unpacking liblocale-gettext-perl (1.07-4) ...
+7[31;0f[42m[30mProgress: [  1%][49m[39m [#................................................................................................] 8Selecting previously unselected package fonts-lato.
+Preparing to unpack .../01-fonts-lato_2.0-2_all.deb ...
+7[31;0f[42m[30mProgress: [  2%][49m[39m [##...............................................................................................] 8Unpacking fonts-lato (2.0-2) ...
+Selecting previously unselected package binutils-common:amd64.
+Preparing to unpack .../02-binutils-common_2.34-6ubuntu1.11_amd64.deb ...
+7[31;0f[42m[30mProgress: [  4%][49m[39m [###..............................................................................................] 8Unpacking binutils-common:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [  4%][49m[39m [####.............................................................................................] 8Selecting previously unselected package libbinutils:amd64.
+Preparing to unpack .../03-libbinutils_2.34-6ubuntu1.11_amd64.deb ...
+Unpacking libbinutils:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [  6%][49m[39m [#####............................................................................................] 8Selecting previously unselected package libctf-nobfd0:amd64.
+Preparing to unpack .../04-libctf-nobfd0_2.34-6ubuntu1.11_amd64.deb ...
+7[31;0f[42m[30mProgress: [  6%][49m[39m [######...........................................................................................] 8Unpacking libctf-nobfd0:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [  7%][49m[39m [######...........................................................................................] 8Selecting previously unselected package libctf0:amd64.
+Preparing to unpack .../05-libctf0_2.34-6ubuntu1.11_amd64.deb ...
+Unpacking libctf0:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [  9%][49m[39m [########.........................................................................................] 8Selecting previously unselected package binutils-x86-64-linux-gnu.
+Preparing to unpack .../06-binutils-x86-64-linux-gnu_2.34-6ubuntu1.11_amd64.deb ...
+7[31;0f[42m[30mProgress: [  9%][49m[39m [########.........................................................................................] 8Unpacking binutils-x86-64-linux-gnu (2.34-6ubuntu1.11) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../07-binutils_2.34-6ubuntu1.11_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 11%][49m[39m [##########.......................................................................................] 8Unpacking binutils (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 11%][49m[39m [###########......................................................................................] 8Selecting previously unselected package libmagic-mgc.
+Preparing to unpack .../08-libmagic-mgc_1%3a5.38-4_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 12%][49m[39m [###########......................................................................................] 8Unpacking libmagic-mgc (1:5.38-4) ...
+Selecting previously unselected package libmagic1:amd64.
+Preparing to unpack .../09-libmagic1_1%3a5.38-4_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 13%][49m[39m [#############....................................................................................] 8Unpacking libmagic1:amd64 (1:5.38-4) ...
+7[31;0f[42m[30mProgress: [ 14%][49m[39m [#############....................................................................................] 8Selecting previously unselected package file.
+Preparing to unpack .../10-file_1%3a5.38-4_amd64.deb ...
+Unpacking file (1:5.38-4) ...
+7[31;0f[42m[30mProgress: [ 16%][49m[39m [###############..................................................................................] 8Selecting previously unselected package lsof.
+Preparing to unpack .../11-lsof_4.93.2+dfsg-1ubuntu0.20.04.1_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 16%][49m[39m [###############..................................................................................] 8Unpacking lsof (4.93.2+dfsg-1ubuntu0.20.04.1) ...
+7[31;0f[42m[30mProgress: [ 17%][49m[39m [################.................................................................................] 8Selecting previously unselected package rkhunter.
+Preparing to unpack .../12-rkhunter_1.4.6-8_all.deb ...
+Unpacking rkhunter (1.4.6-8) ...
+7[31;0f[42m[30mProgress: [ 18%][49m[39m [#################................................................................................] 8Selecting previously unselected package wget.
+Preparing to unpack .../13-wget_1.20.3-1ubuntu2.1_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 19%][49m[39m [##################...............................................................................] 8Unpacking wget (1.20.3-1ubuntu2.1) ...
+Selecting previously unselected package chkrootkit.
+Preparing to unpack .../14-chkrootkit_0.53-1_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 21%][49m[39m [###################..............................................................................] 8Unpacking chkrootkit (0.53-1) ...
+7[31;0f[42m[30mProgress: [ 21%][49m[39m [####################.............................................................................] 8Selecting previously unselected package libdpkg-perl.
+Preparing to unpack .../15-libdpkg-perl_1.19.7ubuntu3.2_all.deb ...
+Unpacking libdpkg-perl (1.19.7ubuntu3.2) ...
+7[31;0f[42m[30mProgress: [ 23%][49m[39m [######################...........................................................................] 8Selecting previously unselected package libfile-fnmatch-perl.
+Preparing to unpack .../16-libfile-fnmatch-perl_0.02-2build6_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 23%][49m[39m [######################...........................................................................] 8Unpacking libfile-fnmatch-perl (0.02-2build6) ...
+7[31;0f[42m[30mProgress: [ 24%][49m[39m [#######################..........................................................................] 8Selecting previously unselected package debsums.
+Preparing to unpack .../17-debsums_2.2.5_all.deb ...
+Unpacking debsums (2.2.5) ...
+7[31;0f[42m[30mProgress: [ 26%][49m[39m [########################.........................................................................] 8Selecting previously unselected package javascript-common.
+Preparing to unpack .../18-javascript-common_11_all.deb ...
+7[31;0f[42m[30mProgress: [ 26%][49m[39m [#########################........................................................................] 8Unpacking javascript-common (11) ...
+Selecting previously unselected package libfile-fcntllock-perl.
+Preparing to unpack .../19-libfile-fcntllock-perl_0.22-3build4_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 28%][49m[39m [##########################.......................................................................] 8Unpacking libfile-fcntllock-perl (0.22-3build4) ...
+7[31;0f[42m[30mProgress: [ 28%][49m[39m [###########################......................................................................] 8Selecting previously unselected package libjs-jquery.
+Preparing to unpack .../20-libjs-jquery_3.3.1~dfsg-3ubuntu0.1_all.deb ...
+7[31;0f[42m[30mProgress: [ 29%][49m[39m [############################.....................................................................] 8Unpacking libjs-jquery (3.3.1~dfsg-3ubuntu0.1) ...
+Selecting previously unselected package rubygems-integration.
+Preparing to unpack .../21-rubygems-integration_1.16_all.deb ...
+7[31;0f[42m[30mProgress: [ 30%][49m[39m [#############################....................................................................] 8Unpacking rubygems-integration (1.16) ...
+7[31;0f[42m[30mProgress: [ 31%][49m[39m [##############################...................................................................] 8Selecting previously unselected package ruby2.7.
+Preparing to unpack .../22-ruby2.7_2.7.0-5ubuntu1.18_amd64.deb ...
+Unpacking ruby2.7 (2.7.0-5ubuntu1.18) ...
+7[31;0f[42m[30mProgress: [ 33%][49m[39m [###############################..................................................................] 8Selecting previously unselected package ruby.
+Preparing to unpack .../23-ruby_1%3a2.7+1_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 33%][49m[39m [################################.................................................................] 8Unpacking ruby (1:2.7+1) ...
+7[31;0f[42m[30mProgress: [ 34%][49m[39m [#################################................................................................] 8Selecting previously unselected package rake.
+Preparing to unpack .../24-rake_13.0.1-4_all.deb ...
+Unpacking rake (13.0.1-4) ...
+7[31;0f[42m[30mProgress: [ 35%][49m[39m [##################################...............................................................] 8Selecting previously unselected package ruby-minitest.
+Preparing to unpack .../25-ruby-minitest_5.13.0-1_all.deb ...
+7[31;0f[42m[30mProgress: [ 36%][49m[39m [###################################..............................................................] 8Unpacking ruby-minitest (5.13.0-1) ...
+Selecting previously unselected package ruby-net-telnet.
+Preparing to unpack .../26-ruby-net-telnet_0.1.1-2_all.deb ...
+7[31;0f[42m[30mProgress: [ 38%][49m[39m [####################################.............................................................] 8Unpacking ruby-net-telnet (0.1.1-2) ...
+7[31;0f[42m[30mProgress: [ 38%][49m[39m [#####################################............................................................] 8Selecting previously unselected package ruby-power-assert.
+Preparing to unpack .../27-ruby-power-assert_1.1.7-1_all.deb ...
+7[31;0f[42m[30mProgress: [ 39%][49m[39m [#####################################............................................................] 8Unpacking ruby-power-assert (1.1.7-1) ...
+Selecting previously unselected package ruby-test-unit.
+Preparing to unpack .../28-ruby-test-unit_3.3.5-1_all.deb ...
+7[31;0f[42m[30mProgress: [ 40%][49m[39m [#######################################..........................................................] 8Unpacking ruby-test-unit (3.3.5-1) ...
+7[31;0f[42m[30mProgress: [ 41%][49m[39m [#######################################..........................................................] 8Selecting previously unselected package ruby-xmlrpc.
+Preparing to unpack .../29-ruby-xmlrpc_0.3.0-2_all.deb ...
+Unpacking ruby-xmlrpc (0.3.0-2) ...
+7[31;0f[42m[30mProgress: [ 43%][49m[39m [#########################################........................................................] 8Selecting previously unselected package libruby2.7:amd64.
+Preparing to unpack .../30-libruby2.7_2.7.0-5ubuntu1.18_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 43%][49m[39m [#########################################........................................................] 8Unpacking libruby2.7:amd64 (2.7.0-5ubuntu1.18) ...
+Selecting previously unselected package unzip.
+Preparing to unpack .../31-unzip_6.0-25ubuntu1.2_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 45%][49m[39m [###########################################......................................................] 8Unpacking unzip (6.0-25ubuntu1.2) ...
+7[31;0f[42m[30mProgress: [ 45%][49m[39m [############################################.....................................................] 8Selecting previously unselected package zip.
+Preparing to unpack .../32-zip_3.0-11build1_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 46%][49m[39m [############################################.....................................................] 8Unpacking zip (3.0-11build1) ...
+Selecting previously unselected package unhide.
+Preparing to unpack .../33-unhide_20130526-4_amd64.deb ...
+7[31;0f[42m[30mProgress: [ 48%][49m[39m [##############################################...................................................] 8Unpacking unhide (20130526-4) ...
+7[31;0f[42m[30mProgress: [ 48%][49m[39m [##############################################...................................................] 8Selecting previously unselected package unhide.rb.
+Preparing to unpack .../34-unhide.rb_22-4_all.deb ...
+Unpacking unhide.rb (22-4) ...
+7[31;0f[42m[30mProgress: [ 50%][49m[39m [################################################.................................................] 8Setting up javascript-common (11) ...
+7[31;0f[42m[30mProgress: [ 50%][49m[39m [################################################.................................................] 87[31;0f[42m[30mProgress: [ 51%][49m[39m [#################################################................................................] 8Setting up fonts-lato (2.0-2) ...
+7[31;0f[42m[30mProgress: [ 52%][49m[39m [##################################################...............................................] 8Setting up wget (1.20.3-1ubuntu2.1) ...
+7[31;0f[42m[30mProgress: [ 53%][49m[39m [###################################################..............................................] 8Setting up ruby-power-assert (1.1.7-1) ...
+7[31;0f[42m[30mProgress: [ 55%][49m[39m [####################################################.............................................] 87[31;0f[42m[30mProgress: [ 55%][49m[39m [#####################################################............................................] 8Setting up libmagic-mgc (1:5.38-4) ...
+7[31;0f[42m[30mProgress: [ 56%][49m[39m [######################################################...........................................] 8Setting up libfile-fcntllock-perl (0.22-3build4) ...
+7[31;0f[42m[30mProgress: [ 57%][49m[39m [#######################################################..........................................] 87[31;0f[42m[30mProgress: [ 58%][49m[39m [########################################################.........................................] 8Setting up unzip (6.0-25ubuntu1.2) ...
+7[31;0f[42m[30mProgress: [ 60%][49m[39m [#########################################################........................................] 8Setting up binutils-common:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 60%][49m[39m [##########################################################.......................................] 8Setting up libmagic1:amd64 (1:5.38-4) ...
+7[31;0f[42m[30mProgress: [ 62%][49m[39m [###########################################################......................................] 87[31;0f[42m[30mProgress: [ 62%][49m[39m [############################################################.....................................] 8Setting up libctf-nobfd0:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 63%][49m[39m [#############################################################....................................] 8Setting up rubygems-integration (1.16) ...
+7[31;0f[42m[30mProgress: [ 65%][49m[39m [##############################################################...................................] 87[31;0f[42m[30mProgress: [ 65%][49m[39m [###############################################################..................................] 8Setting up file (1:5.38-4) ...
+7[31;0f[42m[30mProgress: [ 67%][49m[39m [################################################################.................................] 8Setting up unhide (20130526-4) ...
+7[31;0f[42m[30mProgress: [ 67%][49m[39m [#################################################################................................] 87[31;0f[42m[30mProgress: [ 68%][49m[39m [##################################################################...............................] 8Setting up ruby-minitest (5.13.0-1) ...
+7[31;0f[42m[30mProgress: [ 70%][49m[39m [###################################################################..............................] 8Setting up zip (3.0-11build1) ...
+7[31;0f[42m[30mProgress: [ 70%][49m[39m [####################################################################.............................] 8Setting up ruby-test-unit (3.3.5-1) ...
+7[31;0f[42m[30mProgress: [ 72%][49m[39m [#####################################################################............................] 87[31;0f[42m[30mProgress: [ 72%][49m[39m [######################################################################...........................] 8Setting up ruby-net-telnet (0.1.1-2) ...
+7[31;0f[42m[30mProgress: [ 73%][49m[39m [######################################################################...........................] 8Setting up libdpkg-perl (1.19.7ubuntu3.2) ...
+7[31;0f[42m[30mProgress: [ 74%][49m[39m [########################################################################.........................] 87[31;0f[42m[30mProgress: [ 75%][49m[39m [########################################################################.........................] 8Setting up lsof (4.93.2+dfsg-1ubuntu0.20.04.1) ...
+7[31;0f[42m[30mProgress: [ 77%][49m[39m [##########################################################################.......................] 8Setting up libfile-fnmatch-perl (0.02-2build6) ...
+7[31;0f[42m[30mProgress: [ 77%][49m[39m [##########################################################################.......................] 87[31;0f[42m[30mProgress: [ 78%][49m[39m [###########################################################################......................] 8Setting up debsums (2.2.5) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+7[31;0f[42m[30mProgress: [ 79%][49m[39m [#############################################################################....................] 8Setting up libjs-jquery (3.3.1~dfsg-3ubuntu0.1) ...
+7[31;0f[42m[30mProgress: [ 80%][49m[39m [#############################################################################....................] 8Setting up libbinutils:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 82%][49m[39m [###############################################################################..................] 87[31;0f[42m[30mProgress: [ 82%][49m[39m [###############################################################################..................] 8Setting up ruby-xmlrpc (0.3.0-2) ...
+7[31;0f[42m[30mProgress: [ 84%][49m[39m [#################################################################################................] 8Setting up liblocale-gettext-perl (1.07-4) ...
+7[31;0f[42m[30mProgress: [ 84%][49m[39m [#################################################################################................] 87[31;0f[42m[30mProgress: [ 85%][49m[39m [##################################################################################...............] 8Setting up libctf0:amd64 (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 87%][49m[39m [###################################################################################..............] 8Setting up binutils-x86-64-linux-gnu (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 87%][49m[39m [####################################################################################.............] 8Setting up binutils (2.34-6ubuntu1.11) ...
+7[31;0f[42m[30mProgress: [ 89%][49m[39m [#####################################################################################............] 87[31;0f[42m[30mProgress: [ 89%][49m[39m [######################################################################################...........] 8Setting up chkrootkit (0.53-1) ...
+7[31;0f[42m[30mProgress: [ 90%][49m[39m [#######################################################################################..........] 8debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+Setting up rkhunter (1.4.6-8) ...
+7[31;0f[42m[30mProgress: [ 91%][49m[39m [########################################################################################.........] 8debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+
+Creating config file /etc/default/rkhunter with new version
+[ Rootkit Hunter version 1.4.6 ]
+File created: searched for 178 files, found 121
+7[31;0f[42m[30mProgress: [ 92%][49m[39m [#########################################################################################........] 8Setting up rake (13.0.1-4) ...
+7[31;0f[42m[30mProgress: [ 94%][49m[39m [##########################################################################################.......] 8Setting up libruby2.7:amd64 (2.7.0-5ubuntu1.18) ...
+7[31;0f[42m[30mProgress: [ 94%][49m[39m [###########################################################################################......] 87[31;0f[42m[30mProgress: [ 95%][49m[39m [############################################################################################.....] 8Setting up ruby2.7 (2.7.0-5ubuntu1.18) ...
+7[31;0f[42m[30mProgress: [ 96%][49m[39m [#############################################################################################....] 8Setting up ruby (1:2.7+1) ...
+7[31;0f[42m[30mProgress: [ 97%][49m[39m [##############################################################################################...] 8Setting up unhide.rb (22-4) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Processing triggers for rkhunter (1.4.6-8) ...
+7[31;0f[42m[30mProgress: [ 99%][49m[39m [###############################################################################################..] 8debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+[ Rootkit Hunter version 1.4.6 ]
+File updated: searched for 178 files, found 121
+7[31;0f[42m[30mProgress: [ 99%][49m[39m [################################################################################################.] 8
+7[0;31r8[1A[J]0;root@c1246db0b82f: ~root@c1246db0b82f:~# [Kexit
+exit
+
+Script done on 2026-09-23 17:00:26+00:00 [COMMAND_EXIT_CODE="0"]

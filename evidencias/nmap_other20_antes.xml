@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Sep 23 11:31:23 2026 as: /usr/lib/nmap/nmap -sS -sV -O -p- -T3 -&#45;max-retries 2 -oA nmap_other20_antes 192.117.30.20 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -sS -sV -O -p- -T3 -&#45;max-retries 2 -oA nmap_other20_antes 192.117.30.20" start="1790181083" startstr="Wed Sep 23 11:31:23 2026" version="7.95" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<hosthint><status state="up" reason="unknown-response" reason_ttl="0"/>
+<address addr="192.117.30.20" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<host starttime="1790181090" endtime="1790181099"><status state="up" reason="echo-reply" reason_ttl="63"/>
+<address addr="192.117.30.20" addrtype="ipv4"/>
+<hostnames>
+<hostname name="192.117.30.20.static.012.net.il" type="PTR"/>
+</hostnames>
+<ports><extraports state="closed" count="65531">
+<extrareasons reason="reset" count="65531" proto="tcp" ports="1-21,23-24,26-79,81-8079,8081-65535"/>
+</extraports>
+<port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="ssh" product="OpenSSH" version="8.2p1 Ubuntu 4ubuntu0.13" extrainfo="Ubuntu Linux; protocol 2.0" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:8.2p1</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
+<port protocol="tcp" portid="25"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="smtp" product="Postfix smtpd" hostname=" localhost" method="probed" conf="10"><cpe>cpe:/a:postfix:postfix</cpe></service></port>
+<port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="http" product="nginx" version="1.18.0" extrainfo="Ubuntu" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.18.0</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
+<port protocol="tcp" portid="8080"><state state="open" reason="syn-ack" reason_ttl="63"/><service name="http" product="nginx" version="1.18.0" extrainfo="Ubuntu" ostype="Linux" method="probed" conf="10"><cpe>cpe:/a:igor_sysoev:nginx:1.18.0</cpe><cpe>cpe:/o:linux:linux_kernel</cpe></service></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="22"/>
+<portused state="closed" proto="tcp" portid="1"/>
+<portused state="closed" proto="udp" portid="35702"/>
+<osmatch name="Linux 4.19 - 5.15" accuracy="100" line="70666">
+<osclass type="general purpose" vendor="Linux" osfamily="Linux" osgen="4.X" accuracy="100"><cpe>cpe:/o:linux:linux_kernel:4</cpe></osclass>
+</osmatch>
+</os>
+<uptime seconds="1279515" lastboot="Tue Sep  8 16:06:24 2026"/>
+<distance value="2"/>
+<tcpsequence index="263" difficulty="Good luck!" values="B93F6E24,BB7EBFA5,DCCC101D,A6051102,5A31DA81,DAD5B3A5"/>
+<ipidsequence class="All zeros" values="0,0,0,0,0,0"/>
+<tcptssequence class="1000HZ" values="4C43D80C,4C43D870,4C43D8D5,4C43D939,4C43D99D,4C43DA01"/>
+<times srtt="568" rttvar="103" to="100000"/>
+</host>
+<runstats><finished time="1790181099" timestr="Wed Sep 23 11:31:39 2026" summary="Nmap done at Wed Sep 23 11:31:39 2026; 1 IP address (1 host up) scanned in 16.57 seconds" elapsed="16.57" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

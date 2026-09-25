@@ -1,0 +1,18 @@
+# Nmap 7.95 scan initiated Wed Sep 23 11:31:23 2026 as: /usr/lib/nmap/nmap -sS -sV -O -p- -T3 --max-retries 2 -oA nmap_other20_antes 192.117.30.20
+Nmap scan report for 192.117.30.20.static.012.net.il (192.117.30.20)
+Host is up (0.00057s latency).
+Not shown: 65531 closed tcp ports (reset)
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+25/tcp   open  smtp    Postfix smtpd
+80/tcp   open  http    nginx 1.18.0 (Ubuntu)
+8080/tcp open  http    nginx 1.18.0 (Ubuntu)
+Device type: general purpose
+Running: Linux 4.X
+OS CPE: cpe:/o:linux:linux_kernel:4
+OS details: Linux 4.19 - 5.15
+Network Distance: 2 hops
+Service Info: Host:  localhost; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Sep 23 11:31:39 2026 -- 1 IP address (1 host up) scanned in 16.57 seconds
